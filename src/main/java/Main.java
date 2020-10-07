@@ -1,5 +1,3 @@
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,10 +9,9 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Iterator;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
         FileReader fileReader = new FileReader();
         System.out.println("======Json Containing DATA=========");
@@ -25,8 +22,7 @@ public class Main {
         String dataJsonString = fileReader.readFile(pathToDataJson);
         String configJsonString = fileReader.readFile(pathToConfigJson);
 
-        DocumentContext jsonDataContext = JsonPath.parse(dataJsonString);
-
+        DataHandler dataHandler = new DataHandler(dataJsonString);
         JSONObject configJsonObject = null;
 
         try {
@@ -36,31 +32,14 @@ public class Main {
         }
         Object paths = configJsonObject.get("paths");
 
-        String result = "";
+        System.out.println("==============");
+        System.out.println("Fetching Data based in configs.");
+        String result = factory(paths, dataHandler, configJsonObject);
 
-        if (paths instanceof String) {
-            String path = "$." + paths;
-            result = jsonDataContext.read(path).toString();
-        }
-        if (paths instanceof JSONArray) {
-            String delimiter = (String) configJsonObject.get("delimiter");
-            result = "";
-
-            for (Object objectFromJson : (JSONArray) paths) {
-                if (objectFromJson instanceof String) {
-                    String path = "$." + objectFromJson;
-                    result += jsonDataContext.read(path).toString();
-
-                    result += delimiter;
-                }
-            }
-            result = result.substring(0, result.length() - 1);
-        }
-
-        //Didn't have the time to finish this, the third case is missing. The case should handle a JSONArray of a JSONArray.
-
+        System.out.println("==============");
         System.out.println("The result is:");
         System.out.println(result);
+        System.out.println("==============");
     }
 
     private static String insertValidJsonPath() throws IOException {
@@ -87,4 +66,29 @@ public class Main {
         }
         return input;
     }
+
+    private static String factory(Object paths, DataHandler dataHandler, JSONObject configJsonObject) throws Exception {
+
+        if (paths instanceof String) {
+             return dataHandler.extract((String) paths);
+        }
+        if (paths instanceof JSONArray) {
+            String delimiter = (String) configJsonObject.get("delimiter");
+            String result = "";
+
+            for (Object objectFromJson : (JSONArray) paths) {
+                if (objectFromJson instanceof String) {
+                    result += dataHandler.extract((String) objectFromJson);
+
+                    result += delimiter;
+                }
+            }
+            return result.substring(0, result.length() - 1);
+        }
+
+        //Didn't have the time to finish this, the third case is missing. The case should handle a JSONArray of a JSONArray.
+
+        throw new Exception(String.format("Unsupported data type for %s: %s", paths.toString(), paths.getClass()));
+    }
+
 }

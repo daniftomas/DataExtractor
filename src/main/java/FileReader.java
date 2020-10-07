@@ -3,12 +3,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class FileReader {
-    public String readFile(String path){
+    public String readFile(String path) throws IOException {
         try {
             return new String(Files.readAllBytes(Paths.get(path)));
         } catch (IOException e ) {
-            e.printStackTrace();
-            return "Path not valid";
+            throw new IOException("Path not valid");
         }
     }
 }
