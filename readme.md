@@ -21,5 +21,7 @@ Execute the command:
 Data Json Path: test_data/data.json
 
 Config Json Path 1: test_data/extractors/first_training_name.json
+
 Config Json Path 2: test_data/extractors/internal_id_and_gross_salary.json
+
 Config Json Path 3: test_data/extractors/internal_issues_or_list_of_parties.json --> not implemented, wont work

@@ -57,7 +57,7 @@ public class Main {
             result = result.substring(0, result.length() - 1);
         }
 
-        //Didn't have the time to finnish this, the third case is missing. The case should include a JSONArray of a JSONArray.
+        //Didn't have the time to finish this, the third case is missing. The case should include a JSONArray of a JSONArray.
 
         System.out.println("The result is:");
         System.out.println(result);
