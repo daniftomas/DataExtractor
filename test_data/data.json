@@ -1,0 +1,33 @@
+{
+  "employee": {
+    "internal_id": 12345,
+    "full_name": "John Doe",
+    "department": {
+      "internal_id": "33_a",
+      "responsible_id": "00001"
+    },
+    "trainings_provided": [
+      {
+        "name": "First-Aid",
+        "status": "Approved",
+        "has_certiﬁcate": true,
+        "date": "2020-01-02"
+      }
+    ],
+    "gross_salary": "1560€",
+    "internal_issues": [],
+    "date_of_birth": "1991-01-10",
+    "date_of_employment": "2011-11-02"
+  },
+  "social_activity": {
+    "parties": {
+      "2012_xmas": {
+        "attended": false
+      },
+      "2013_company_retreat": {
+        "attended": true,
+        "plus1": false
+      }
+    }
+  }
+}

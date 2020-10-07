@@ -1,0 +1,9 @@
+{
+  "paths": [
+    [
+      "employee.internal_issues",
+      "social_activity.parties"
+    ]
+  ],
+  "delimiter": "_"
+}

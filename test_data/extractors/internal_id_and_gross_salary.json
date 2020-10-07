@@ -1,0 +1,7 @@
+{
+  "paths": [
+    "employee.internal_id",
+    "employee.gross_salary"
+  ],
+  "delimiter": "_"
+}
